@@ -5,5 +5,5 @@ Part of complete Unreal engine course.
 
 You are free to download, fork and edit this repository!
 
-Enjoj, Dino.
+Enjoy, Dino.
 
