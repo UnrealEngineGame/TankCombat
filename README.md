@@ -3,7 +3,7 @@ An open world head-to-head tank fight with simple AI, terrain and advanced contr
 
 Part of complete Unreal engine course.
 
-You are free to download, fork this repository!
+You are free to download, fork and edit this repository!
 
-Thank you, Dino.
+Enjoj, Dino.
 
