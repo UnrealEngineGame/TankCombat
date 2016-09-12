@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "AimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -10,19 +11,28 @@ class TANKCOMBAT_API ATank : public APawn
 {
 	GENERATED_BODY()
 
-public:
+private:
 	// Sets default values for this pawn's properties
 	ATank();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;	
 
-	
-	
+protected:
+	//pointer to component that we will include on our every tank at compile time
+	UAimingComponent* AimingComponent = nullptr;
+
+public:	
+	virtual void AimAt(FVector HitLocation);
+
+	//setting the barrel for the tank from blueprint
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 };
