@@ -4,7 +4,7 @@
 #include "TankPlayerController.h"
 
 
-//on the beggining of the play
+//on the begging of the play
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -18,8 +18,6 @@ void ATankPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController is possesing: %s"), *CurrentTank->GetName());
 	}
-
-	//(!CurrentTank) ? UE_LOG(LogTemp, Error, TEXT("TankPlayerController not possesing any tank")) : UE_LOG(LogTemp, Warning, TEXT("TankPlayerController is possesing: %s"), *CurrentTank->GetName());
 }
 
 //every frame of the game
@@ -32,45 +30,45 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	return Cast<ATank>(GetPawn());
+	APawn* ControlledTank = GetPawn();
+	if (!ControlledTank) { return nullptr; }
+	return Cast<ATank>(ControlledTank);
 }
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
 	if (!GetControlledTank()) { return;  }
 
-	FVector HitLocation;
+	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("TankPlayerController is possesing: %s"), *HitLocation.ToString());
-	}	
-
-	/*FHitResult HitResult;
-	FVector ViewLocation;
-	FRotator ViewRotation;
-
-	float Reach = 200.f;
-
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT ViewLocation, OUT ViewRotation);
-
-	FVector EndLocation = ViewLocation + ViewRotation.Vector()*Reach;
-
-	GetWorld()->LineTraceSingleByChannel(OUT HitResult, ViewLocation, EndLocation, ECC_WorldStatic, FCollisionQueryParams(true));
-	DrawDebugLine(GetWorld(), ViewLocation, EndLocation, FColor(255, 0, 0), false, 0.f, 0.f, 10.f);*/
+		UE_LOG(LogTemp, Warning, TEXT("Hit location is : %s"), *HitLocation.ToString());
+	}
+	
 }
 
 //Get world location of line trace through cross hair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
  
-	int32 ViewPortSizeX, ViewPortSizeY;
-	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
-
-	auto CrossHairScreenLocation = FVector2D(ViewPortSizeX * CrossHairXLocation, ViewPortSizeY * CrossHairYLocation);
-
-	UE_LOG(LogTemp, Warning, TEXT("Screen ocation of crosshair is : %s"), *CrossHairScreenLocation.ToString());
-
+	FHitResult HitResult;
+	if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
+	{
+		HitLocation = HitResult.ImpactPoint;
+		UE_LOG(LogTemp, Warning, TEXT("Hit result object : %s"), *HitResult.GetActor()->GetName());
+	}
+	// Draws a red line for debugging purposes
+	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);
 
 	return true;
 }
+
+FVector2D ATankPlayerController::GetCrossHairScreenPosition() const 
+{
+	int32 ViewPortSizeX, ViewPortSizeY;
+	GetViewportSize(ViewPortSizeX, ViewPortSizeY);	 
+
+	return FVector2D(ViewPortSizeX * CrossHairXLocation, ViewPortSizeY * CrossHairYLocation);
+}
+
 

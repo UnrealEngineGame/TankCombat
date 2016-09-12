@@ -30,6 +30,8 @@ void ATankAIController::BeginPlay()
 
 ATank* ATankAIController::GetControlledTank() const
 {
+	auto AIController = GetPawn();
+	if (!AIController) { return nullptr; }
 	return Cast<ATank>(GetPawn());
 }
 
