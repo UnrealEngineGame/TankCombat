@@ -5,9 +5,10 @@
 
 
 
-void UTankBarrel::ElevateBarrel(float DeegreesBySecond)
+void UTankBarrel::ElevateBarrel(float RelativeSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Degrees by second are : %f"), DeegreesBySecond);
+	float Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("Degrees by second are : %f, %f"), Time, RelativeSpeed);
 }
 
 
