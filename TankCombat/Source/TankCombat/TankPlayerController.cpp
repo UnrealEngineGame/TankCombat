@@ -24,7 +24,6 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	AimTowardsCrossHair();
 }
 
@@ -42,7 +41,7 @@ void ATankPlayerController::AimTowardsCrossHair()
 	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		GetControlledTank()->AimAt(HitLocation, GetControlledTank()->GetLaunchSpeed());
 		//UE_LOG(LogTemp, Warning, TEXT("Hit location is : %s"), *HitLocation.ToString());
 	}
 	
@@ -56,7 +55,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
 	{
 		HitLocation = HitResult.ImpactPoint;
-		UE_LOG(LogTemp, Warning, TEXT("Hit result object : %s"), *HitResult.GetActor()->GetName());
 	}
 	// Draws a red line for debugging purposes
 	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);

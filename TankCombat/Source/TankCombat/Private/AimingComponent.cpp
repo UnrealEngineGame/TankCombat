@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankCombat.h"
+#include "TankBarrel.h"
 #include "AimingComponent.h"
 #include "../Public/AimingComponent.h"
 
@@ -17,36 +18,47 @@ UAimingComponent::UAimingComponent()
 }
 
 
-// Called when the game starts
-void UAimingComponent::BeginPlay()
+void UAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-void UAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
-{
-	if (BarrelToSet)
-	{
-		Barrel = BarrelToSet;
-	}
+	if (!BarrelToSet) { return; }
+	Barrel = BarrelToSet;
 }
 
 
-// Called every frame
-void UAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
-}
-
-void UAimingComponent::AimAt(FVector WordSpaceAim)
+void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 {
 	auto OurTankName = GetOwner()->GetName();
 	//FString BarrelLocation = ;
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at : %s from: %s"), *OurTankName, *WordSpaceAim.ToString(),  *Barrel->GetComponentLocation().ToString());
+
+	FVector TossVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	
+	if (UGameplayStatics::SuggestProjectileVelocity(
+		this, 
+		TossVelocity, 
+		StartLocation, 
+		Opponent, 
+		LaunchSpeed, 		
+		ESuggestProjVelocityTraceOption::TraceFullPath
+		))
+	{
+		FVector AimDirection = TossVelocity.GetSafeNormal();
+		MoveBarrelTowards(AimDirection);	
+	}
+
+
+
+}
+
+void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator AimDirectionRotation = AimDirection.Rotation();
+	FRotator BarrelMoveRotation = AimDirectionRotation - BarrelRotation;
+
+	Barrel->ElevateBarrel(5.f);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Barrel is aiming at : %s"), *BarrelMoveRotation.ToString());
+
 }
 

@@ -25,7 +25,7 @@ void ATank::BeginPlay()
 }
 
 
-void ATank::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	AimingComponent->SetBarrelReference(BarrelToSet);
 }
@@ -44,8 +44,13 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
-void ATank::AimAt(FVector HitLocation)
+void ATank::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	AimingComponent->AimAt(HitLocation);
-} 
+	AimingComponent->AimAtOpponent(HitLocation, LaunchSpeed);
+}
+
+float ATank::GetLaunchSpeed()
+{
+	return LaunchSpeed;
+}
 

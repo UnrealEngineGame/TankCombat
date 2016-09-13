@@ -5,7 +5,10 @@
 #include "Components/ActorComponent.h"
 #include "AimingComponent.generated.h"
 
+//Forward declaration
+class UTankBarrel; 
 
+//Holds all the properties for aiaming to an opponent
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKCOMBAT_API UAimingComponent : public UActorComponent
 {
@@ -15,20 +18,17 @@ public:
 	// Sets default values for this component's properties
 	UAimingComponent();
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 	//setting the barrel for the tank
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	
-	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
-
 	//Choose what to aim
-	virtual void AimAt(FVector WordSpaceAim);
+	virtual void AimAtOpponent(FVector Opponent, float LaunchSpeed);
+
+	//move the barrel toward aiming location
+	void MoveBarrelTowards(FVector AimDirection);
 
 private:
 
-	UStaticMeshComponent* Barrel = nullptr;
-	
+	UTankBarrel* Barrel = nullptr;
+
 };
