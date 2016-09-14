@@ -39,7 +39,7 @@ void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 		StartLocation, 
 		Opponent, 
 		LaunchSpeed, 		
-		ESuggestProjVelocityTraceOption::TraceFullPath
+		ESuggestProjVelocityTraceOption::DoNotTrace
 		))
 	{
 		FVector AimDirection = TossVelocity.GetSafeNormal();
