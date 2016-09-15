@@ -52,3 +52,8 @@ float ATank::GetLaunchSpeed()
 	return LaunchSpeed;
 }
 
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Firing"));
+}
+

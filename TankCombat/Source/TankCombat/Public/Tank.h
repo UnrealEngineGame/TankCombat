@@ -30,9 +30,9 @@ protected:
 	UAimingComponent* AimingComponent = nullptr;
 
 public:	
-	virtual void AimAt(FVector HitLocation, float LaunchSpeed);
 
-	virtual float GetLaunchSpeed();
+	UFUNCTION(BlueprintCallable, Category = "Tank Firing")
+	void Fire();
 
 	//setting the barrel for the tank from blueprint
 	UFUNCTION(BlueprintCallable, Category = Setup)
@@ -45,4 +45,9 @@ public:
 	//setting the turret for the tank from blueprint
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
+
+
+	virtual void AimAt(FVector HitLocation, float LaunchSpeed);
+
+	virtual float GetLaunchSpeed();
 };
