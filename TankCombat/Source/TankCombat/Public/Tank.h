@@ -7,6 +7,7 @@
 
 //Forward declaration
 class UTankBarrel; 
+class UTankTurret;
 class UAimingComponent;
 
 UCLASS()
@@ -39,5 +40,9 @@ public:
 
 	//setting the barrel for the tank from blueprint
 	UPROPERTY(EditAnywhere, Category = "TankCombat:Firing")
-		float LaunchSpeed = 100000.f; //Sensible starting value 1000 m/s
+	float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
+
+	//setting the turret for the tank from blueprint
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret* TurretToSet);
 };

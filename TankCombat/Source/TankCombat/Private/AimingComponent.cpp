@@ -2,6 +2,7 @@
 
 #include "TankCombat.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "AimingComponent.h"
 #include "../Public/AimingComponent.h"
 
@@ -24,13 +25,20 @@ void UAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+void UAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
+}
+
 
 void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 {
-	auto OurTankName = GetOwner()->GetName();
-	//FString BarrelLocation = ;
+	if (!BluprintTankPartsAreAssociated( Barrel, Turret)) { return; }
 
-	FVector TossVelocity;
+	auto OurTankName = GetOwner()->GetName();
+
+	FVector TossVelocity;	
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	
 	if (UGameplayStatics::SuggestProjectileVelocity(
@@ -38,7 +46,10 @@ void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 		TossVelocity, 
 		StartLocation, 
 		Opponent, 
-		LaunchSpeed, 		
+		LaunchSpeed, 
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 		))
 	{
@@ -54,11 +65,27 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionRotation = AimDirection.Rotation();
-	FRotator BarrelMoveRotation = AimDirectionRotation - BarrelRotation;
-
-	Barrel->ElevateBarrel(5.f);
-
-	//UE_LOG(LogTemp, Warning, TEXT("Barrel is aiming at : %s"), *BarrelMoveRotation.ToString());
+	FRotator DeltaRotator = AimDirectionRotation - BarrelRotation;
+	
+	Barrel->ElevateBarrel(DeltaRotator.Pitch);
+	Turret->RotateTurret(DeltaRotator.Yaw);
 
 }
+
+bool UAimingComponent::BluprintTankPartsAreAssociated(UTankBarrel * Barrel, UTankTurret * Turret)
+{
+	if (!Barrel)
+	{
+		UE_LOG(LogTemp, Error, TEXT("There is no Barrel reference in blueprint"));
+		return false;
+	}
+	else if (!Turret)
+	{
+		UE_LOG(LogTemp, Error, TEXT("There is no Turret reference in blueprint"));
+		return false;
+	}
+	return true;
+}
+
+
 

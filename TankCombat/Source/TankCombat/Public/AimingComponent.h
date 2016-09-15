@@ -6,7 +6,8 @@
 #include "AimingComponent.generated.h"
 
 //Forward declaration
-class UTankBarrel; 
+class UTankBarrel;
+class UTankTurret;
 
 //Holds all the properties for aiaming to an opponent
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -20,6 +21,9 @@ public:
 
 	//setting the barrel for the tank
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	//setting the barrel for the tank
+	void SetTurretReference(UTankTurret* TurretToSet);
 	
 	//Choose what to aim
 	virtual void AimAtOpponent(FVector Opponent, float LaunchSpeed);
@@ -30,5 +34,8 @@ public:
 private:
 
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
+
+	bool BluprintTankPartsAreAssociated(UTankBarrel* Barrel, UTankTurret* Turret);
 
 };

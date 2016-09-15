@@ -21,14 +21,18 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
 }
 
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
-	AimingComponent->SetBarrelReference(BarrelToSet);
+	AimingComponent->SetBarrelReference(BarrelToSet);	
+}
+
+void ATank::SetTurretReference(UTankTurret * TurretToSet)
+{
+	AimingComponent->SetTurretReference(TurretToSet);
 }
 
 // Called to bind functionality to input

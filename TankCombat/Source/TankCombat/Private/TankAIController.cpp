@@ -34,7 +34,7 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (GetPlayerTank())
 	{
-		//AimTowardsPlayer();
+		//AimTowardsPlayer;
 		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation(), GetControlledTank()->GetLaunchSpeed());
 	}
 }
