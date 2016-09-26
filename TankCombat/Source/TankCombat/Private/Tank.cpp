@@ -3,6 +3,8 @@
 #include "TankCombat.h"
 #include "Tank.h"
 #include "AimingComponent.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "../Public/Tank.h"
 
 
@@ -28,6 +30,7 @@ void ATank::BeginPlay()
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	AimingComponent->SetBarrelReference(BarrelToSet);	
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
@@ -55,5 +58,9 @@ float ATank::GetLaunchSpeed()
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Firing"));
+	if (!Barrel) { return; }
+
+	FVector Lokacija = Barrel->GetSocketLocation(FName("Projectile"));
+	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 }
 

@@ -9,6 +9,7 @@
 class UTankBarrel; 
 class UTankTurret;
 class UAimingComponent;
+class AProjectile;
 
 UCLASS()
 class TANKCOMBAT_API ATank : public APawn
@@ -46,6 +47,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	//Keeping the local reference to Barrel
+	UTankBarrel* Barrel = nullptr;
 
 	virtual void AimAt(FVector HitLocation, float LaunchSpeed);
 
