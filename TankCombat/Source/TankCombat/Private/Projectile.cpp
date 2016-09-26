@@ -9,7 +9,8 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
+	ProjectileMovementComponent->bAutoActivate = false; // kako bi sprijecili da se projektil ne spawnuje odma h na knostruktoru nego onda kada ga mi ispalimo.
 }
 
 // Called when the game starts or when spawned

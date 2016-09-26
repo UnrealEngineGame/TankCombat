@@ -5,12 +5,15 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
+
 UCLASS()
 class TANKCOMBAT_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+
+
+private:	
 	// Sets default values for this actor's properties
 	AProjectile();
 
@@ -20,6 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	
+private:
+	//Initialize Projectile Movement Component 
+	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 	
 };
