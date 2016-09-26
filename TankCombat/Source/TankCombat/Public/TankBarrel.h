@@ -19,12 +19,12 @@ public:
 	void ElevateBarrel(float RelativeSpeed);	
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float MaxDeegreesPerSecond = 10.f; 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float  MinElevationPerSecond = 0.f; 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float MaxElevationPerSecond = 40.f; 
 };

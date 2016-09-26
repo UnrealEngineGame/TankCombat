@@ -26,6 +26,9 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;	
 
+
+	double LastFireTime = 0;
+
 protected:
 	//pointer to component that we will include on our every tank at compile time
 	UAimingComponent* AimingComponent = nullptr;
@@ -40,20 +43,21 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	//setting the barrel for the tank from blueprint
-	UPROPERTY(EditAnywhere, Category = "TankCombat:Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
 	float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
+
+	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
+	float ReloadedTimeInSeconds = 3.f;
 
 	//setting the turret for the tank from blueprint
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	//Keeping the local reference to Barrel
 	UTankBarrel* Barrel = nullptr;
 
 	virtual void AimAt(FVector HitLocation, float LaunchSpeed);
-
-	virtual float GetLaunchSpeed();
 };

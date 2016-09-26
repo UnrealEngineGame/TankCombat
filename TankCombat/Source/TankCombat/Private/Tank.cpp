@@ -50,16 +50,19 @@ void ATank::AimAt(FVector HitLocation, float LaunchSpeed)
 	AimingComponent->AimAtOpponent(HitLocation, LaunchSpeed);
 }
 
-float ATank::GetLaunchSpeed()
-{
-	return LaunchSpeed;
-}
-
 void ATank::Fire()
 {
-	if (!Barrel) { return; }
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
-	if (!Projectile) { return; }
-	Projectile->LaunchProjectile(LaunchSpeed); //iz nekog razloga kada je varijabla auto c++ zna o kojoj se vrsti objekta radi
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadedTimeInSeconds;
+
+	if (Barrel && isReloaded)
+	{ 
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+		if (!Projectile) { return; }
+		Projectile->LaunchProjectile(LaunchSpeed); //iz nekog razloga kada je varijabla auto c++ zna o kojoj se vrsti objekta radi
+		LastFireTime = FPlatformTime::Seconds();
+	}
+	else {
+		return;
+	}
 }
 
