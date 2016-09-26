@@ -57,10 +57,9 @@ float ATank::GetLaunchSpeed()
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing"));
 	if (!Barrel) { return; }
-
-	FVector Lokacija = Barrel->GetSocketLocation(FName("Projectile"));
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+	if (!Projectile) { return; }
+	Projectile->LaunchProjectile(LaunchSpeed); //iz nekog razloga kada je varijabla auto c++ zna o kojoj se vrsti objekta radi
 }
 
