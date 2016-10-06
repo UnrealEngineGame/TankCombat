@@ -10,6 +10,7 @@ class UTankBarrel;
 class UTankTurret;
 class UAimingComponent;
 class AProjectile;
+class UTankMovementComponent;
 
 UCLASS()
 class TANKCOMBAT_API ATank : public APawn
@@ -32,6 +33,9 @@ private:
 protected:
 	//pointer to component that we will include on our every tank at compile time
 	UAimingComponent* AimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, Category = Input)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:	
 
