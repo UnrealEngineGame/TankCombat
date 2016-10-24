@@ -23,7 +23,7 @@ public:
 	void IntendToMoveForward(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = Input)
-		void IntendToMoveRight(float Throw);
+	void IntendToTurnRight(float Throw);
 	
 private:
 	UTankTrack* RightTankTrack = nullptr;

@@ -6,8 +6,6 @@
 
 void UTankMovementComponent::Initialise(UTankTrack* RightTankTrackToSet, UTankTrack* LeftTankTrackToSet)
 {
-	if (!RightTankTrackToSet || !LeftTankTrackToSet) { return; }
-
 	LeftTankTrack = LeftTankTrackToSet;
 	RightTankTrack = RightTankTrackToSet;
 }
@@ -20,10 +18,10 @@ void UTankMovementComponent::IntendToMoveForward(float Throw)
 	LeftTankTrack->SetThrottle(Throw);
 }
 
-void UTankMovementComponent::IntendToMoveRight(float Throw)
+void UTankMovementComponent::IntendToTurnRight(float Throw)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Right: %f"), Throw);
 	if (!RightTankTrack || !LeftTankTrack) { return; }
-	RightTankTrack->SetThrottle(-Throw);
+	RightTankTrack->SetThrottle(-Throw); // ovo ne oze da radi ovako jel setuje x na 0 i onda se tenk ne krece
 	LeftTankTrack->SetThrottle(Throw);
 }
