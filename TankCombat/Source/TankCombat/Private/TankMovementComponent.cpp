@@ -14,14 +14,14 @@ void UTankMovementComponent::IntendToMoveForward(float Throw)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("RightTrack: %s, LEftTrack: %s"), *RightTankTrack->GetName(), *LeftTankTrack->GetName());
 	if (!RightTankTrack || !LeftTankTrack) { return; }
-	RightTankTrack->SetThrottle(Throw);
 	LeftTankTrack->SetThrottle(Throw);
+	RightTankTrack->SetThrottle(Throw);
 }
 
 void UTankMovementComponent::IntendToTurnRight(float Throw)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Right: %f"), Throw);
 	if (!RightTankTrack || !LeftTankTrack) { return; }
-	RightTankTrack->SetThrottle(-Throw); // ovo ne oze da radi ovako jel setuje x na 0 i onda se tenk ne krece
 	LeftTankTrack->SetThrottle(Throw);
+	RightTankTrack->SetThrottle(-Throw); // ovo ne oze da radi ovako jel setuje x na 0 i onda se tenk ne krece
 }
