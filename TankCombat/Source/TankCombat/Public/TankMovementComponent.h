@@ -24,6 +24,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendToTurnRight(float Throw);
+
+	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;    
 	
 private:
 	UTankTrack* RightTankTrack = nullptr;

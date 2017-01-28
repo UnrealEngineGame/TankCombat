@@ -10,18 +10,33 @@ void UTankMovementComponent::Initialise(UTankTrack* RightTankTrackToSet, UTankTr
 	RightTankTrack = RightTankTrackToSet;
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+    //we are moving the tank from the result of cosines parallelism between the tank forward direction and AI forward direction
+    //both vector values have to be normalized to get total result of x,y and of max value 1
+    //Dot product calculates this value by default for us and return a float between -1 - 1;
+    float ParallelismCos = FVector::DotProduct(GetOwner()->GetActorForwardVector().GetSafeNormal(), MoveVelocity.GetSafeNormal());
+
+    IntendToMoveForward(ParallelismCos);
+
+
+
+
+}
+ 
+
 void UTankMovementComponent::IntendToMoveForward(float Throw)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("RightTrack: %s, LEftTrack: %s"), *RightTankTrack->GetName(), *LeftTankTrack->GetName());
 	if (!RightTankTrack || !LeftTankTrack) { return; }
 	LeftTankTrack->SetThrottle(Throw);
 	RightTankTrack->SetThrottle(Throw);
 }
 
+
 void UTankMovementComponent::IntendToTurnRight(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Right: %f"), Throw);
 	if (!RightTankTrack || !LeftTankTrack) { return; }
 	LeftTankTrack->SetThrottle(Throw);
-	RightTankTrack->SetThrottle(-Throw); // ovo ne oze da radi ovako jel setuje x na 0 i onda se tenk ne krece
+	RightTankTrack->SetThrottle(-Throw); 
 }
+
