@@ -31,7 +31,8 @@ private:
 	double LastFireTime = 0;
 
 protected:
-	//pointer to component that we will include on our every tank at compile time
+	//Pointer to component that we will include on our every tank at compile time
+    UPROPERTY(BlueprintReadOnly, Category = Aiming)
 	UAimingComponent* AimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, Category = Input)
@@ -43,24 +44,16 @@ public:
 	void Fire();
 
 	//setting the barrel for the tank from blueprint
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	//setting the barrel for the tank from blueprint
 	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
 	float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
 	float ReloadedTimeInSeconds = 3.f;
 
-	//setting the turret for the tank from blueprint
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	//Keeping the local reference to Barrel
+	//Keeping the local reference to Barrel TODO Remove
 	UTankBarrel* Barrel = nullptr;
 
 	virtual void AimAt(FVector HitLocation, float LaunchSpeed);

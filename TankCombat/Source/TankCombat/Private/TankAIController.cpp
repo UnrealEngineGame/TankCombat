@@ -18,7 +18,6 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (PlayerTank && AITank)
 	{
-        //M0ve to actor 
         MoveToActor(PlayerTank, 3000.f);
 
 		//AimTowardsPlayer;

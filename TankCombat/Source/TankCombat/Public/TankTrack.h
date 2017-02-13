@@ -21,6 +21,5 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	float TrackMaxDrivingForce = 400000; //Assume 40 tonne tank, and 1g force (10ms2)
-
 	
 };

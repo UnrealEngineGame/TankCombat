@@ -19,22 +19,16 @@ UAimingComponent::UAimingComponent()
 }
 
 
-void UAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!BarrelToSet) { return; }
-	Barrel = BarrelToSet;
+    if (BarrelToSet == nullptr || TurretToSet == nullptr) { return; }
+    Turret = TurretToSet;
+    Barrel = BarrelToSet;
 }
-
-void UAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	if (!TurretToSet) { return; }
-	Turret = TurretToSet;
-}
-
 
 void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 {
-	if (!BluprintTankPartsAreAssociated( Barrel, Turret)) { return; }
+	if ( Barrel == nullptr || Turret == nullptr) { return; }
 
 	auto OurTankName = GetOwner()->GetName();
 
@@ -56,13 +50,12 @@ void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 		FVector AimDirection = TossVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);	
 	}
-
-
-
 }
 
 void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+    if (Barrel == nullptr || Turret == nullptr) { return; }
+
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionRotation = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionRotation - BarrelRotation;
@@ -72,20 +65,7 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 }
 
-bool UAimingComponent::BluprintTankPartsAreAssociated(UTankBarrel * Barrel, UTankTurret * Turret)
-{
-	if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("There is no Barrel reference in blueprint"));
-		return false;
-	}
-	else if (!Turret)
-	{
-		UE_LOG(LogTemp, Error, TEXT("There is no Turret reference in blueprint"));
-		return false;
-	}
-	return true;
-}
+
 
 
 

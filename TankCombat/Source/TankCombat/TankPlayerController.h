@@ -16,15 +16,19 @@ class TANKCOMBAT_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-private:
-
 	virtual void BeginPlay() override; //override is used to get sure that we are overriding the parent's class. virtual that we allow this class to be overwritten within our children.
 
 	virtual void Tick(float DeltaTime);
 
+protected:
+
+    UFUNCTION(BlueprintCallable, Category = "Aiming")
 	ATank* GetControlledTank() const;
 
+private:
+
 	// Start the tank moving the barrel towards to crosshair
+    UFUNCTION(BlueprintCallable, Category = "Aiming")
 	void AimTowardsCrossHair();
 
 	//Return an out parameter, true if hit landscape

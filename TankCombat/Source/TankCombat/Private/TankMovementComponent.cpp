@@ -18,19 +18,11 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
     float DotVectorDirection = FVector::DotProduct(GetOwner()->GetActorForwardVector().GetSafeNormal(), MoveVelocity.GetSafeNormal());
 
     IntendToMoveForward(DotVectorDirection);
-
-
     //Cross product calculates the parallelism between the tank direction (local) and the direction that AI intends to go, The result is the vector (odd) and the z value is the rotation that we are looking for.
-
     FVector CrossVectorRotation = FVector::CrossProduct(GetOwner()->GetActorForwardVector().GetSafeNormal(), MoveVelocity.GetSafeNormal());
     
-    UE_LOG(LogTemp, Warning, TEXT("CrossVectorRotation %f"), CrossVectorRotation.Z);
-
     //HINT AI wont rotate to player unless it is is collision with the nav mesh is restarted at the start of play mode
     IntendToTurnRight(CrossVectorRotation.Z);
-
-
-
 }
  
 
