@@ -7,7 +7,7 @@
 
 //Forward declaration
 class ATank;
-
+class UAimingComponent;
 /**
  * 
  */
@@ -24,6 +24,9 @@ protected:
 
     UFUNCTION(BlueprintCallable, Category = "Aiming")
 	ATank* GetControlledTank() const;
+
+    UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+    void FoundedAimingComponent(UAimingComponent* AimingComponent);
 
 private:
 

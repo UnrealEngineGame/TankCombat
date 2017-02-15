@@ -3,6 +3,7 @@
 #include "TankCombat.h"
 #include "Tank.h"
 #include "TankPlayerController.h"
+#include "AimingComponent.h"
 
 
 //on the begging of the play
@@ -10,15 +11,13 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto CurrentTank = GetControlledTank();
-	if (!CurrentTank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController not possesing any tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController is possesing: %s"), *CurrentTank->GetName());
-	}
+	ATank* CurrentTank = GetControlledTank();
+
+    UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? "possed by TankPlayerController" : "not possed by any PlayerController");
+    UAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
+    if (!AimingComponent)
+        UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
+    FoundedAimingComponent(AimingComponent);
 }
 
 //every frame of the game
