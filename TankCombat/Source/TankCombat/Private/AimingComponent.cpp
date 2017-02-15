@@ -21,17 +21,14 @@ UAimingComponent::UAimingComponent()
 
 void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-    if (BarrelToSet == nullptr || TurretToSet == nullptr) { return; }
+    if (!ensure(BarrelToSet && TurretToSet)) { return; }
+
     Turret = TurretToSet;
     Barrel = BarrelToSet;
 }
 
 void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 {
-	if ( Barrel == nullptr || Turret == nullptr) { return; }
-
-	auto OurTankName = GetOwner()->GetName();
-
 	FVector TossVelocity;	
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	
@@ -54,7 +51,7 @@ void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 
 void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-    if (Barrel == nullptr || Turret == nullptr) { return; }
+    if (!ensure(Barrel && Turret)) { return; }
 
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionRotation = AimDirection.Rotation();

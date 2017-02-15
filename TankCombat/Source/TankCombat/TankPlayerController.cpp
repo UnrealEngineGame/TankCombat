@@ -13,11 +13,11 @@ void ATankPlayerController::BeginPlay()
 
 	ATank* CurrentTank = GetControlledTank();
 
-    UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? "possed by TankPlayerController" : "not possed by any PlayerController");
+    UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? *FString("possed by TankPlayerController") : *FString("not possed by any PlayerController"));
     UAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
-    if (!AimingComponent)
+    if (!ensure(AimingComponent))
         UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
-    FoundedAimingComponent(AimingComponent);
+    OnFoundedAimingComponent(AimingComponent);
 }
 
 //every frame of the game
@@ -29,15 +29,12 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	APawn* ControlledTank = GetPawn();
-	if (!ControlledTank) { return nullptr; }
-	return Cast<ATank>(ControlledTank);
+	return Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!GetControlledTank()) { return; }
-
+	if (!ensure(GetControlledTank())) { return; }
 	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
 		GetControlledTank()->AimAt(HitLocation, GetControlledTank()->LaunchSpeed);

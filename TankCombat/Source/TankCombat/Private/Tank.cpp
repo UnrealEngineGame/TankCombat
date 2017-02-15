@@ -32,15 +32,17 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 void ATank::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-    if (AimingComponent == nullptr) { return; }
+    if (!ensure(AimingComponent)) { return; }
 	AimingComponent->AimAtOpponent(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
+
+    if (!ensure(Barrel)) { return; }
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadedTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{ 
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		if (!Projectile) { return; }

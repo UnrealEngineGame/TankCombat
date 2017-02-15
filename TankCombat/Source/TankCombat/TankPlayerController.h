@@ -26,7 +26,7 @@ protected:
 	ATank* GetControlledTank() const;
 
     UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-    void FoundedAimingComponent(UAimingComponent* AimingComponent);
+    void OnFoundedAimingComponent(UAimingComponent* AimingComponent);
 
 private:
 

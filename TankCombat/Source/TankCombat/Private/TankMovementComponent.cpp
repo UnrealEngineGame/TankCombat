@@ -28,7 +28,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 void UTankMovementComponent::IntendToMoveForward(float Throw)
 {
-	if (!RightTankTrack || !LeftTankTrack) { return; }
+	if (!ensure(RightTankTrack && !LeftTankTrack)) { return; }
 	LeftTankTrack->SetThrottle(Throw);
 	RightTankTrack->SetThrottle(Throw);
 }
@@ -36,8 +36,7 @@ void UTankMovementComponent::IntendToMoveForward(float Throw)
 
 void UTankMovementComponent::IntendToTurnRight(float Throw)
 {
-	if (!RightTankTrack || !LeftTankTrack) { return; }
-    //UE_LOG(LogTemp, Error, TEXT("Throw %f"), Throw);
+    if (!ensure(RightTankTrack && !LeftTankTrack)) { return; }
 
 	LeftTankTrack->SetThrottle(Throw);
 	RightTankTrack->SetThrottle(-Throw); 
