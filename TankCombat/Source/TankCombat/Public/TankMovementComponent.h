@@ -17,7 +17,7 @@ class TANKCOMBAT_API UTankMovementComponent : public UNavMovementComponent
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void Initialise(UTankTrack* RightTankTrackToSet, UTankTrack* LeftTankTrackToSet);
+	void Initialize(UTankTrack* RightTankTrackToSet, UTankTrack* LeftTankTrackToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendToMoveForward(float Throw);

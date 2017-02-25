@@ -36,6 +36,8 @@ public:
 	//move the barrel toward aiming location
 	void MoveBarrelTowards(FVector AimDirection);
 
+    UTankBarrel* GetTankBarrel() const;
+
 protected:
 
     UPROPERTY(BlueprintReadOnly, Category = "Aiming State")

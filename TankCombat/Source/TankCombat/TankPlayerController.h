@@ -9,7 +9,7 @@
 class ATank;
 class UAimingComponent;
 /**
- * 
+ * Class responsible for player movement (initialized in a TankCombat game mode)
  */
 UCLASS()
 class TANKCOMBAT_API ATankPlayerController : public APlayerController

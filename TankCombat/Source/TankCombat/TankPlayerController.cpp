@@ -12,12 +12,14 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ATank* CurrentTank = GetControlledTank();
-
-    UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? *FString("possed by TankPlayerController") : *FString("not possed by any PlayerController"));
-    UAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
-    if (!ensure(AimingComponent))
-        UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
-    OnFoundedAimingComponent(AimingComponent);
+    if (ensure(CurrentTank))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? *FString("possed by TankPlayerController") : *FString("not possed by any PlayerController"));
+        UAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
+        if (!ensure(AimingComponent))
+            UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
+        OnFoundedAimingComponent(AimingComponent);
+    }
 }
 
 //every frame of the game
@@ -46,7 +48,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
  
 	FHitResult HitResult;
-	if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
+    if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
 		HitLocation = HitResult.ImpactPoint;
 	// Draws a red line for debugging purposes
 	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);

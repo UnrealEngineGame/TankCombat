@@ -22,7 +22,6 @@ UAimingComponent::UAimingComponent()
 void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
     if (!ensure(BarrelToSet && TurretToSet)) { return; }
-
     Turret = TurretToSet;
     Barrel = BarrelToSet;
 }
@@ -62,6 +61,10 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 }
 
+UTankBarrel* UAimingComponent::GetTankBarrel() const
+{
+    return Barrel;
+}
 
 
 
