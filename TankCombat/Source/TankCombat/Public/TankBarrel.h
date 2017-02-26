@@ -6,7 +6,7 @@
 #include "TankBarrel.generated.h"
 
 /**
- * 
+ * Class responble for barrel moving and firing
  */
 UCLASS(meta = (BlueprintSpawnableComponent)) //ovo omogucava da ju mozemo dodavati iz blueprinta.
 class TANKCOMBAT_API UTankBarrel : public UStaticMeshComponent
@@ -26,5 +26,5 @@ private:
 	float  MinElevationPerSecond = 0.f; 
 
 	UPROPERTY(EditDefaultsOnly)
-	float MaxElevationPerSecond = 40.f; 
+	float MaxElevationPerSecond = 40.f;    
 };

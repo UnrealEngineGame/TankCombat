@@ -13,8 +13,6 @@ class TANKCOMBAT_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
-private:
-
 public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);

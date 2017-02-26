@@ -6,8 +6,6 @@
 #include "Tank.generated.h"
 
 //Forward declaration
-class UTankTurret;
-class AProjectile;
 class UTankMovementComponent;
 
 UCLASS()
@@ -22,27 +20,9 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;	
-
-
-	double LastFireTime = 0;
-
 protected:
-	//Pointer to component that we will include on our every tank at compile time
+	//Mozemo ovo maknuti i u Aimingcomponent isto kao na tutorijalu ali meni je dosta logicnije da stoji ovdje
 	UPROPERTY(BlueprintReadOnly, Category = Input)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
-public:	
-
-	UFUNCTION(BlueprintCallable, Category = "Tank Firing")
-	void Fire();
-
-	
-
-	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
-	float ReloadedTimeInSeconds = 3.f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
 };

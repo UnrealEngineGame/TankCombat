@@ -6,7 +6,6 @@
 #include "TankPlayerController.generated.h"
 
 //Forward declaration
-class ATank;
 class UAimingComponent;
 /**
  * Class responsible for player movement (initialized in a TankCombat game mode)

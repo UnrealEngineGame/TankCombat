@@ -2,8 +2,6 @@
 
 #include "TankCombat.h"
 #include "Tank.h"
-#include "Projectile.h"
-#include "TankMovementComponent.h"
 #include "../Public/Tank.h"
 
 
@@ -21,28 +19,6 @@ void ATank::BeginPlay()
 }
 
 
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
-{
-	Super::SetupPlayerInputComponent(InputComponent);
 
-}
 
-void ATank::Fire()
-{
-
-   /* if (!ensure(Barrel)) { return; }
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadedTimeInSeconds;
-
-	if (isReloaded)
-	{ 
-		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
-		if (!Projectile) { return; }
-		Projectile->LaunchProjectile(LaunchSpeed); 
-		LastFireTime = FPlatformTime::Seconds();
-	}
-	else {
-		return;
-	}*/
-}
 

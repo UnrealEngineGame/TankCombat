@@ -8,6 +8,7 @@
 //Forward declaration
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 UENUM()
 enum class EFiringStatus : uint8
@@ -34,6 +35,9 @@ public:
     UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
     float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
 
+    UFUNCTION(BlueprintCallable, Category = "Gameplay")
+    void Fire();
+
 	//Choose what to aim
 	virtual void AimAtOpponent(FVector Opponent);
 
@@ -51,5 +55,14 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
+        float ReloadedTimeInSeconds = 3.f;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+        TSubclassOf<AProjectile> ProjectileBlueprint;
+
+    double LastFireTime = 0;
+
 
 };

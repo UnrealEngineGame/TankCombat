@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankCombat.h"
-#include "Tank.h"
 #include "TankPlayerController.h"
 #include "AimingComponent.h"
 
@@ -22,7 +21,8 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	AimTowardsCrossHair();
+    if (ensure(AimingComponent))
+	    AimTowardsCrossHair();
 }
 
 void ATankPlayerController::AimTowardsCrossHair()
