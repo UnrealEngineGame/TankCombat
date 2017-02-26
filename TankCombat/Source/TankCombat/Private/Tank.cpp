@@ -2,8 +2,6 @@
 
 #include "TankCombat.h"
 #include "Tank.h"
-#include "AimingComponent.h"
-#include "TankBarrel.h"
 #include "Projectile.h"
 #include "TankMovementComponent.h"
 #include "../Public/Tank.h"
@@ -20,9 +18,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
     Super::BeginPlay();
-
-    AimingComponent = FindComponentByClass<UAimingComponent>();
-    Barrel = AimingComponent->GetTankBarrel();
 }
 
 
@@ -33,16 +28,10 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
-void ATank::AimAt(FVector HitLocation, float LaunchSpeed)
-{
-    if (!ensure(AimingComponent)) { return; }
-	AimingComponent->AimAtOpponent(HitLocation, LaunchSpeed);
-}
-
 void ATank::Fire()
 {
 
-    if (!ensure(Barrel)) { return; }
+   /* if (!ensure(Barrel)) { return; }
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadedTimeInSeconds;
 
 	if (isReloaded)
@@ -54,6 +43,6 @@ void ATank::Fire()
 	}
 	else {
 		return;
-	}
+	}*/
 }
 

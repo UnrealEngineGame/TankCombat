@@ -3,10 +3,13 @@
 #include "TankCombat.h"
 #include "Tank.h"
 #include "../Public/TankAIController.h"
+#include "AimingComponent.h"
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+
+    AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -20,9 +23,11 @@ void ATankAIController::Tick(float DeltaTime)
 	{
         MoveToActor(PlayerTank, 3000.f);
 
-		//AimTowardsPlayer;
-		AITank->AimAt(PlayerTank->GetActorLocation(), AITank->LaunchSpeed);
-		AITank->Fire();
+        if (ensure(AimingComponent))
+        {
+            AimingComponent->AimAtOpponent(PlayerTank->GetActorLocation());
+		    AITank->Fire();
+        }
 	}
 }
 

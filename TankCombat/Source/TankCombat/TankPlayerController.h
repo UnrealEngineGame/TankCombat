@@ -22,11 +22,10 @@ class TANKCOMBAT_API ATankPlayerController : public APlayerController
 
 protected:
 
-    UFUNCTION(BlueprintCallable, Category = "Aiming")
-	ATank* GetControlledTank() const;
-
     UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
     void OnFoundedAimingComponent(UAimingComponent* AimingComponent);
+
+    UAimingComponent* AimingComponent = nullptr;
 
 private:
 

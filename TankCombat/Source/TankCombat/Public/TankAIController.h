@@ -7,6 +7,7 @@
 
 //Forward declaration
 class ATank;
+class UAimingComponent;
 
 /**
  * 
@@ -21,5 +22,9 @@ private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+protected:
+
+    UAimingComponent* AimingComponent = nullptr;
 
 };

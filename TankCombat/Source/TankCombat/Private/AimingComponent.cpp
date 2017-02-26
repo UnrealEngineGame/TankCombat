@@ -26,7 +26,7 @@ void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretT
     Barrel = BarrelToSet;
 }
 
-void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
+void UAimingComponent::AimAtOpponent(FVector OpponentLocation)
 {
 	FVector TossVelocity;	
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -35,7 +35,7 @@ void UAimingComponent::AimAtOpponent(FVector Opponent, float LaunchSpeed)
 		this, 
 		TossVelocity, 
 		StartLocation, 
-		Opponent, 
+		OpponentLocation, 
 		LaunchSpeed, 
 		false,
 		0,

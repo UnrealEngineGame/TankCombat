@@ -11,15 +11,11 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATank* CurrentTank = GetControlledTank();
-    if (ensure(CurrentTank))
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), CurrentTank ? *FString("possed by TankPlayerController") : *FString("not possed by any PlayerController"));
-        UAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
-        if (!ensure(AimingComponent))
-            UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
-        OnFoundedAimingComponent(AimingComponent);
-    }
+    UE_LOG(LogTemp, Warning, TEXT("Tank is %s"), GetPawn() ? *FString("possed by TankPlayerController") : *FString("not possed by any PlayerController"));
+    AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
+    if (!ensure(AimingComponent))
+        UE_LOG(LogTemp, Error, TEXT("Tank player controller could not found the aiming compponent on the begin play"));
+    OnFoundedAimingComponent(AimingComponent);
 }
 
 //every frame of the game
@@ -29,18 +25,11 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrossHair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!ensure(GetControlledTank())) { return; }
 	FVector HitLocation = FVector(0);
-	if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
-		GetControlledTank()->AimAt(HitLocation, GetControlledTank()->LaunchSpeed);
-	
+    if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
+        AimingComponent->AimAtOpponent(HitLocation);	
 }
 
 //Get world location of line trace through cross hair, true if hits landscape

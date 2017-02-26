@@ -30,8 +30,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Aiming Setup")
     void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+    //setting the barrel for the tank from blueprint
+    UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
+    float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
+
 	//Choose what to aim
-	virtual void AimAtOpponent(FVector Opponent, float LaunchSpeed);
+	virtual void AimAtOpponent(FVector Opponent);
 
 	//move the barrel toward aiming location
 	void MoveBarrelTowards(FVector AimDirection);
@@ -47,6 +51,5 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
-
 
 };
