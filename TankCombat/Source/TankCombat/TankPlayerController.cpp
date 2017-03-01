@@ -3,6 +3,7 @@
 #include "TankCombat.h"
 #include "TankPlayerController.h"
 #include "AimingComponent.h"
+#include "Tank.h"
 
 
 //on the begging of the play
@@ -35,10 +36,15 @@ void ATankPlayerController::AimTowardsCrossHair()
 //Get world location of line trace through cross hair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
- 
 	FHitResult HitResult;
     if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
 		HitLocation = HitResult.ImpactPoint;
+        if (HitResult.GetActor() != nullptr && HitResult.GetActor()->IsA<ATank>())
+        {
+            //UE_LOG(LogTemp, Error, TEXT("GetActor %s"), *HitResult.GetActor()->GetName());
+            //AimingComponent->FiringState = EFiringStatus::Locked;
+        }
+
 	// Draws a red line for debugging purposes
 	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);
 

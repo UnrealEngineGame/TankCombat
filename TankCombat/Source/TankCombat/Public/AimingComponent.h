@@ -25,6 +25,10 @@ class TANKCOMBAT_API UAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+    virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+    virtual void BeginPlay() override;
+
 	// Sets default values for this component's properties
 	UAimingComponent();
 
@@ -49,9 +53,11 @@ public:
 protected:
 
     UPROPERTY(BlueprintReadOnly, Category = "Aiming State")
-    EFiringStatus FiringState = EFiringStatus::Aiming;
+        EFiringStatus FiringState;
 
 private:
+
+    FVector AimDirection = FVector(0);
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -64,5 +70,6 @@ private:
 
     double LastFireTime = 0;
 
+    bool IsBarrelStatic();
 
 };
