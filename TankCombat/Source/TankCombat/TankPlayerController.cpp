@@ -39,12 +39,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	FHitResult HitResult;
     if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
 		HitLocation = HitResult.ImpactPoint;
-        if (HitResult.GetActor() != nullptr && HitResult.GetActor()->IsA<ATank>())
-        {
-            //UE_LOG(LogTemp, Error, TEXT("GetActor %s"), *HitResult.GetActor()->GetName());
-            //AimingComponent->FiringState = EFiringStatus::Locked;
-        }
-
 	// Draws a red line for debugging purposes
 	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);
 
