@@ -6,7 +6,6 @@
 #include "Tank.h"
 
 
-//on the begging of the play
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -18,7 +17,7 @@ void ATankPlayerController::BeginPlay()
     OnFoundedAimingComponent(AimingComponent);
 }
 
-//every frame of the game
+
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -29,7 +28,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::AimTowardsCrossHair()
 {
 	FVector HitLocation = FVector(0);
-    if (GetSightRayHitLocation(HitLocation)) // we calculating and creating an out parameter for hit location.
+    if (GetSightRayHitLocation(HitLocation))
         AimingComponent->AimAtOpponent(HitLocation);	
 }
 
@@ -38,11 +37,15 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	FHitResult HitResult;
     if (GetHitResultAtScreenPosition(GetCrossHairScreenPosition(), ECollisionChannel::ECC_WorldStatic, false, HitResult))
+    {
 		HitLocation = HitResult.ImpactPoint;
+        return true;
+    }
+    else {
+        return false;
+    }
 	// Draws a red line for debugging purposes
 	//DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor::Red);
-
-	return true;
 }
 
 FVector2D ATankPlayerController::GetCrossHairScreenPosition() const 

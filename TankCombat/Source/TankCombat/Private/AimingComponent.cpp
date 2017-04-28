@@ -58,7 +58,7 @@ void UAimingComponent::AimAtOpponent(FVector OpponentLocation)
 		TossVelocity, 
 		StartLocation, 
 		OpponentLocation, 
-		LaunchSpeed, 
+		LaunchRange, 
 		false,
 		0,
 		0,
@@ -76,9 +76,11 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionRotation = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionRotation - BarrelRotation;
-	
+
+    //Always rotate take the shortest way possible
+    (FMath::Abs(DeltaRotator.Yaw) < 180.0f) ? Turret->RotateTurret(DeltaRotator.Yaw) : Turret->RotateTurret(-DeltaRotator.Yaw);
+
 	Barrel->ElevateBarrel(DeltaRotator.Pitch);
-	Turret->RotateTurret(DeltaRotator.Yaw);
 
 }
 
@@ -90,7 +92,7 @@ void UAimingComponent::Fire()
         if (!ensure(ProjectileBlueprint)) { return; }
         AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
         if (!ensure(Projectile)) { return; }
-        Projectile->LaunchProjectile(LaunchSpeed);
+        Projectile->LaunchProjectile(LaunchRange);
         LastFireTime = GetWorld()->GetTimeSeconds();
     }
 }

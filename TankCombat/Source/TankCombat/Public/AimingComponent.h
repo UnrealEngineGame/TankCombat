@@ -35,9 +35,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Aiming Setup")
     void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-    //setting the barrel for the tank from blueprint
+    /*Based on this range the SuggestProjectileVelocity function will compute the velocity based on distance*/
     UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
-    float LaunchSpeed = 4000.f; //Sensible starting value 1000 m/s
+    float LaunchRange = 7000.f; 
 
     UFUNCTION(BlueprintCallable, Category = "Gameplay")
     void Fire();
