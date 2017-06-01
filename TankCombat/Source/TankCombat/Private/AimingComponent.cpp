@@ -25,12 +25,12 @@ void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretT
 {
     if (!ensure(BarrelToSet && TurretToSet)) { return; }
     Turret = TurretToSet;
-    Barrel = BarrelToSet;
+    Barrel = BarrelToSet;  
 }
 
 void UAimingComponent::BeginPlay()
 {
-    //First fire after initial load
+    //First reload after initial load
     FiringState = EFiringStatus::Reloading;
     LastFireTime = GetWorld()->GetTimeSeconds();
 }
@@ -86,7 +86,7 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UAimingComponent::Fire()
 {
-    if (FiringState != EFiringStatus::Reloading)
+    if (FiringState == EFiringStatus::Locked)
     {
         if (!ensure(Barrel)) { return; }
         if (!ensure(ProjectileBlueprint)) { return; }
@@ -100,6 +100,11 @@ void UAimingComponent::Fire()
 UTankBarrel* UAimingComponent::GetTankBarrel() const
 {
     return Barrel;
+}
+
+EFiringStatus UAimingComponent::GetFiringStatus() const
+{
+	return FiringState;
 }
 
 bool UAimingComponent::IsBarrelStatic()

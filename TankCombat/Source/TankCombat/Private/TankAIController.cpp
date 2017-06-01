@@ -21,12 +21,13 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (ensure(PlayerTank && AITank))
 	{
-        MoveToActor(PlayerTank, 3000.f);
+        MoveToActor(PlayerTank, 10000.f);
 
         if (ensure(AimingComponent))
         {
             AimingComponent->AimAtOpponent(PlayerTank->GetActorLocation());
-            AimingComponent->Fire();
+			if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked)
+				AimingComponent->Fire();
         }
 	}
 }

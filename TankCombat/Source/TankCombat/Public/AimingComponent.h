@@ -50,6 +50,8 @@ public:
 
     UTankBarrel* GetTankBarrel() const;
 
+	EFiringStatus GetFiringStatus() const;
+
 protected:
 
     UPROPERTY(BlueprintReadOnly, Category = "Aiming State")
