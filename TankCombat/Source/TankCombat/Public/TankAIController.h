@@ -31,7 +31,7 @@ protected:
 
     UAimingComponent* AimingComponent = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay")
 	float AcceptanceRadius = 150000.f; // the tank wont try to reach us inside of this radius
 
 	bool IsPLayerVisible();

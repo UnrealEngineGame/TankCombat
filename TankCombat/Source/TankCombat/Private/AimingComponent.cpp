@@ -3,6 +3,7 @@
 #include "TankCombat.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Tank.h"
 #include "AimingComponent.h"
 #include "../Public/AimingComponent.h"
 #include "Projectile.h"
@@ -13,7 +14,6 @@ UAimingComponent::UAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
     PrimaryComponentTick.bStartWithTickEnabled = true;
 
@@ -30,6 +30,7 @@ void UAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretT
 
 void UAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
     //First reload after initial load
     FiringState = EFiringStatus::Reloading;
     LastFireTime = GetWorld()->GetTimeSeconds();
@@ -39,7 +40,19 @@ void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, 
 {
     if ((GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadedTimeInSeconds)
     {
-        IsBarrelStatic() ? FiringState = EFiringStatus::Locked : FiringState = EFiringStatus::Aiming;
+		ATank* Tank = (ATank*)GetOwner();
+
+		if (IsBarrelStatic() && Tank->GetVelocity().SizeSquared() < VelocityShootTreshold)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Velocity %f"), Tank->GetVelocity().SizeSquared());
+			FiringState = EFiringStatus::Locked;
+		}
+		else
+		{
+			FiringState = EFiringStatus::Aiming;
+		}
+
+
     }
     else
     {

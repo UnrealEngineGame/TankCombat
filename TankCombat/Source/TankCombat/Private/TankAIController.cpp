@@ -23,13 +23,14 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (ensure(PlayerTank && AITank))
 	{
-        MoveToActor(PlayerTank, 10000.f);
+		MoveToActor(PlayerTank, AcceptanceRadius);
+
 
         if (ensure(AimingComponent))
         {
             AimingComponent->AimAtOpponent(PlayerTank->GetActorLocation());
-			/*if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked && IsPLayerVisible())
-				AimingComponent->Fire();*/
+			if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked && IsPLayerVisible())
+				AimingComponent->Fire();
         }
 	}
 }
@@ -54,13 +55,12 @@ bool ATankAIController::IsPLayerVisible()
 
 				if (HitResult.GetActor()->GetClass()->IsChildOf(ATank::StaticClass()))
 				{
-					UE_LOG(LogTemp, Error, TEXT("Tenk jebeni %s"), *HitResult.GetActor()->GetClass()->GetName());
+					//UE_LOG(LogTemp, Error, TEXT("Tenk jebeni %s"), *HitResult.GetActor()->GetClass()->GetName());
 					return true;
 				}
 				else
 				{
-					UE_LOG(LogTemp, Warning, TEXT("NIJEEEE"));
-
+					//UE_LOG(LogTemp, Warning, TEXT("NIJEEEE"));
 				}
 				return false;
 	}		

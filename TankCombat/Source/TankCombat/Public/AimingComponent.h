@@ -55,7 +55,7 @@ public:
 protected:
 
     UPROPERTY(BlueprintReadOnly, Category = "Aiming State")
-        EFiringStatus FiringState;
+    EFiringStatus FiringState;
 
 private:
 
@@ -65,10 +65,13 @@ private:
 	UTankTurret* Turret = nullptr;
 
     UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
-        float ReloadedTimeInSeconds = 3.f;
+    float ReloadedTimeInSeconds = 3.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TankCombat:Firing")
+	float VelocityShootTreshold = 100.f;
 
     UPROPERTY(EditDefaultsOnly, Category = "Setup")
-        TSubclassOf<AProjectile> ProjectileBlueprint;
+    TSubclassOf<AProjectile> ProjectileBlueprint;
 
     double LastFireTime = 0;
 
