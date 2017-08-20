@@ -23,9 +23,17 @@ private:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Gameplay")
+	ATank* PlayerTank;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Gameplay")
+	ATank* AITank;
 
     UAimingComponent* AimingComponent = nullptr;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	float AcceptanceRadius = 150000.f; // the tank wont try to reach us inside of this radius
+
+	bool IsPLayerVisible();
 
 };
