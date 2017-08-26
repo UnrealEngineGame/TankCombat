@@ -18,6 +18,8 @@ UAimingComponent::UAimingComponent()
     PrimaryComponentTick.bStartWithTickEnabled = true;
 
 	// ...
+
+	Rounds = 10;
 }
 
 
@@ -38,26 +40,35 @@ void UAimingComponent::BeginPlay()
 
 void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-    if ((GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadedTimeInSeconds)
-    {
-		ATank* Tank = (ATank*)GetOwner();
+	UE_LOG(LogTemp, Error, TEXT("Ammo %d"), Rounds);
 
-		if (IsBarrelStatic() && Tank->GetVelocity().SizeSquared() < VelocityShootTreshold)
+	if (Rounds > 0)
+	{
+		if ((GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadedTimeInSeconds)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Velocity %f"), Tank->GetVelocity().SizeSquared());
-			FiringState = EFiringStatus::Locked;
+			ATank* Tank = (ATank*)GetOwner();
+			if (Tank == nullptr) { return; }
+
+			if (IsBarrelStatic() && !Tank->IsMoving())
+			{
+				//UE_LOG(LogTemp, Error, TEXT("Velocity %f"), Tank->GetVelocity().SizeSquared());
+				FiringState = EFiringStatus::Locked;
+			}
+			else
+			{
+				FiringState = EFiringStatus::Aiming;
+			}
+
 		}
 		else
 		{
-			FiringState = EFiringStatus::Aiming;
+			FiringState = EFiringStatus::Reloading;
 		}
-
-
-    }
-    else
-    {
-        FiringState = EFiringStatus::Reloading;
-    }
+	}
+	else
+	{
+		FiringState = EFiringStatus::OutOfAmmo;
+	}
 }
 
 
@@ -99,7 +110,7 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UAimingComponent::Fire()
 {
-    if (FiringState == EFiringStatus::Locked)
+    if (FiringState == EFiringStatus::Locked && Rounds > 0)
     {
         if (!ensure(Barrel)) { return; }
         if (!ensure(ProjectileBlueprint)) { return; }
@@ -107,6 +118,7 @@ void UAimingComponent::Fire()
         if (!ensure(Projectile)) { return; }
         Projectile->LaunchProjectile(LaunchRange);
         LastFireTime = GetWorld()->GetTimeSeconds();
+		Rounds--;
     }
 }
 
@@ -118,6 +130,11 @@ UTankBarrel* UAimingComponent::GetTankBarrel() const
 EFiringStatus UAimingComponent::GetFiringStatus() const
 {
 	return FiringState;
+}
+
+int32 UAimingComponent::GetRoundsLeft() const
+{
+	return Rounds;
 }
 
 bool UAimingComponent::IsBarrelStatic()

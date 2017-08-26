@@ -15,7 +15,8 @@ enum class EFiringStatus : uint8
 {
     Reloading,
     Aiming,
-    Locked
+    Locked,
+	OutOfAmmo
 };
 
 //Holds all the properties for aiming to an opponent
@@ -52,10 +53,18 @@ public:
 
 	EFiringStatus GetFiringStatus() const;
 
+	void SetAmmo(int8 AmmoNo);
+
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	int32 GetRoundsLeft() const;
+
 protected:
 
     UPROPERTY(BlueprintReadOnly, Category = "Aiming State")
     EFiringStatus FiringState;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	int32 Rounds;
 
 private:
 
@@ -76,5 +85,6 @@ private:
     double LastFireTime = 0;
 
     bool IsBarrelStatic();
+
 
 };

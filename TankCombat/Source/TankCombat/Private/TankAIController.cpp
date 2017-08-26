@@ -14,6 +14,8 @@ void ATankAIController::BeginPlay()
 
 	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	AITank = Cast<ATank>(GetPawn());
+
+	Ammo = 10000;
 }
 
 void ATankAIController::Tick(float DeltaTime)
