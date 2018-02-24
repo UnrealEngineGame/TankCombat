@@ -24,7 +24,7 @@ bool ATank::IsMoving()
 {
 	return this->GetVelocity().SizeSquared() > VelocityTreshold;
 }
-
+	
 
 
 

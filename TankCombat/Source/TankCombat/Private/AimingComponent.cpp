@@ -40,7 +40,7 @@ void UAimingComponent::BeginPlay()
 
 void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	UE_LOG(LogTemp, Error, TEXT("Ammo %d"), Rounds);
+	//UE_LOG(LogTemp, Error, TEXT("Ammo %d"), Rounds);
 
 	if (Rounds > 0)
 	{
